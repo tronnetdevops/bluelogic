@@ -30,20 +30,32 @@
 
 			$params["GUID"] = session_id();
 
-			$submittedValues = self::MeetsRequirements($params, self::$available_calls["createCustomer"]);
+			self::Request($params, $data);
+		}
 
-			if (is_array($submittedValues)){
-				$data = array_merge($submittedValues, $data);
+		static public function createOrderHeader($params){
+			$data = array_merge(self::$requestBaseData, array(
+				"Action" => "CreateOrderHeader"
+			));
 
-				error_log("This herre is the data being sent!");
-				error_log(var_export($data, true));
-			 
-			 	$response = parse_ini_string(AJAX::Request(self::BL_API_URI, $data));
+			self::Request($params, $data);
+		}
 
-				AJAX::Response("json", $response);
-			} else {
-				AJAX::Response("json", array(), 1, $submittedValues);
-			}
+		static public function createOrder($params){
+			$data = array_merge(self::$requestBaseData, array(
+				"Action" => "CreateOrder"
+			));
+
+			self::Request($params, $data);
+		}
+
+
+		static public function processOrder($params){
+			$data = array_merge(self::$requestBaseData, array(
+				"Action" => "ProcessOrder"
+			));
+
+			self::Request($params, $data);
 		}
 
 		static public function MeetsRequirements($params, $reqs){
@@ -60,6 +72,20 @@
 				return $data;
 			} else {
 				return "The following fields are missing: ". implode(array_diff($reqs, $intersects), ", ");
+			}
+		}
+
+		static public function Request($params, $data){
+			$submittedValues = self::MeetsRequirements($params, self::$available_calls[ $params["action"] ]);
+
+			if (is_array($submittedValues)){
+				$data = array_merge($submittedValues, $data);
+
+			 	$response = parse_ini_string(AJAX::Request(self::BL_API_URI, $data));
+
+				AJAX::Response("json", $response);
+			} else {
+				AJAX::Response("json", array(), 1, $submittedValues);
 			}
 		}
 	}
