@@ -1,0 +1,7 @@
+curl -d "Action=CreateCustomer&Version=1.00&ClientID=E4F6BB40-A353-4211-995E-6AA5713134A5&Surname=TEST&GUID=testcustomer1&Address1=2040 Alameda Padre Serra #220&County=Santa Barbara&PostCode=93103&Country=US&OptIn=1" http://77.233.142.21/bluelogic/BLWP_direct.php
+
+Version=1.00
+Status=OK
+StatusDetails=OK
+CustomerID=136116
+CustomerAddressID=151733
