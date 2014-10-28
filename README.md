@@ -24,6 +24,13 @@ ProductCode=Product code of item to order
 Qnty=Number of products being ordered,
 UnitPrice=Price of a single product
 
+Example Request
+===============
+
+```
+http://api.bluelogic.tronnet.me?Surname=Tronhammer&GUID=5&Address1=123 Test St.&PostCode=93101&County=Santa Barbara&Country=US&OptIn=1&ShippingMethod=Carrier&PaymentMethod=Credit Card&Currency=US Dollars&CurrencyRate=0.00&ProductCode=912&Qnty=1&UnitPrice=17.80
+```
+
 
 Server Requirements
 ===================
