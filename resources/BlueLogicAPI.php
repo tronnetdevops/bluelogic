@@ -3,60 +3,25 @@
 
 		const BL_API_URI = "http://77.233.142.21/bluelogic/BLWP_direct.php";
 
-		static protected $requestBaseData = array(
+		static public $requestBaseData = array(
 			"ClientID" => "E4F6BB40-A353-4211-995E-6AA5713134A5",
 			"Version" => "1.00"
 		);
 
 		static public $available_calls = array(
-			"createCustomer" => array(
+			"CreateCustomer" => array(
 				"Surname", "GUID", "Address1", "PostCode", "OptIn", "County", "Country"
 			), 
-			"createOrderHeader" => array(
+			"CreateOrderHeader" => array(
 				"CustomerID", "CustomerAddressID", "ClientOrderRef", "ShippingMethod", "PaymentMethod", "Currency", "CurrencyRate"
 			), 
-			"createOrder" => array(
+			"CreateOrderLine" => array(
 				"OrderID", "ProductCode", "Qnty", "UnitPrice"
 			), 
-			"processOrder" => array(
+			"ProcessOrder" => array(
 				"OrderID"
 			)
 		);
-
-		static public function createCustomer($params){
-			$data = array_merge(self::$requestBaseData, array(
-				"Action" => "CreateCustomer"
-			));
-
-			$params["GUID"] = session_id();
-
-			self::Request($params, $data);
-		}
-
-		static public function createOrderHeader($params){
-			$data = array_merge(self::$requestBaseData, array(
-				"Action" => "CreateOrderHeader"
-			));
-
-			self::Request($params, $data);
-		}
-
-		static public function createOrder($params){
-			$data = array_merge(self::$requestBaseData, array(
-				"Action" => "CreateOrder"
-			));
-
-			self::Request($params, $data);
-		}
-
-
-		static public function processOrder($params){
-			$data = array_merge(self::$requestBaseData, array(
-				"Action" => "ProcessOrder"
-			));
-
-			self::Request($params, $data);
-		}
 
 		static public function MeetsRequirements($params, $reqs){
 			$data = array();
@@ -76,14 +41,15 @@
 		}
 
 		static public function Request($params, $data){
-			$submittedValues = self::MeetsRequirements($params, self::$available_calls[ $params["action"] ]);
+			$submittedValues = self::MeetsRequirements($params, self::$available_calls[ $data["Action"] ]);
 
 			if (is_array($submittedValues)){
 				$data = array_merge($submittedValues, $data);
 
 			 	$response = parse_ini_string(AJAX::Request(self::BL_API_URI, $data));
 
-				AJAX::Response("json", $response);
+				//AJAX::Response("json", $response);
+				return $response;
 			} else {
 				AJAX::Response("json", array(), 1, $submittedValues);
 			}
