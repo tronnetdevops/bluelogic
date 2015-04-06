@@ -4,7 +4,7 @@
 		const BL_API_URI = "http://77.233.142.21/bluelogic/BLWP_direct.php";
 
 		static public $requestBaseData = array(
-			"ClientID" => "E4F6BB40-A353-4211-995E-6AA5713134A5",
+			"ClientID" => "",
 			"Version" => "1.00"
 		);
 
